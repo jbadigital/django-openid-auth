@@ -43,7 +43,7 @@ class Nonce(models.Model):
 class Association(models.Model):
     server_url = models.TextField(max_length=2047)
     handle = models.CharField(max_length=255)
-    secret = models.TextField(max_length=255) # Stored base64 encoded
+    secret = models.TextField(max_length=255)  # Stored base64 encoded
     issued = models.IntegerField()
     lifetime = models.IntegerField()
     assoc_type = models.TextField(max_length=64)
@@ -54,5 +54,7 @@ class Association(models.Model):
 
 class UserOpenID(models.Model):
     user = models.ForeignKey(User)
-    claimed_id = models.TextField(max_length=2047, unique=True)
+    # removed unique on claimed_id due to
+    #       https://bugs.launchpad.net/django-openid-auth/+bug/524796
+    claimed_id = models.TextField(max_length=2047)
     display_id = models.TextField(max_length=2047)
